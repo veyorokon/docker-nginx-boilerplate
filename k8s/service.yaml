@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: dashboard-api
+  namespace: dashboard
+spec:
+  selector:
+    app: dashboard-api
+  ports:
+    - name: dashboard-http
+      port: 8000
+      targetPort: 8000
+
+metadata:
+  name: dashboard-frontend
+  namespace: dashboard
+spec:
+  selector:
+    app: dashboard-frontend
+  ports:
+    - name: dashboard-frontend-http
+      port: 80
+      targetPort: 80

@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dashboard-api
+  namespace: dashboard
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dashboard-api
+  template:
+    metadata:
+      labels:
+        app: dashboard-api
+    spec:
+      serviceAccountName: ingress-watcher
+      containers:
+      - name: main
+        image: registry.prototype.act3-ace.com/veyorokonwsri/dashboard_api:v1.18
+        ports:
+        - containerPort: 80

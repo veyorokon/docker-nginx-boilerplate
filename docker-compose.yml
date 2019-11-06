@@ -1,0 +1,48 @@
+version: "3.5"
+
+services:
+  #############################
+  # dashboard API
+  #############################
+  container_python:
+    build:
+      context: ./container_python/
+      dockerfile: Dockerfile
+    image: docker-registry.com/container_python
+    ports:
+      - 8080:8080
+    environment:
+      - "CPORT=8080"
+    labels:
+      com.type: proxyable
+
+  #############################
+  # Nginx Container
+  #############################
+  container_nginx:
+    build:
+      context: ./container_nginx/
+      dockerfile: Dockerfile
+    ports:
+      - 80:80
+    depends_on:
+      - container_python
+      - container_node
+
+    #############################
+    # dashboard Frontend
+    #############################
+  container_node:
+    build:
+      context: ./container_node/
+      dockerfile: Dockerfile
+    image: docker-registry.com/container_node
+    volumes:
+      - ./container_node/:/src
+      - /src/node_modules
+    ports:
+      - 3000:3000
+      - 5000:5000
+    environment:
+      - "NODE_ENV=production"
+      - "REACT_APP_BACKEND_API=http://localhost:8000"

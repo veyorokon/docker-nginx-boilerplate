@@ -1,0 +1,7 @@
+name: dashboardRest
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - flask
+  - flask-cors

@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: dashboard
+spec:
+  rules:
+  - host: www.coyote.act3-ace.com
+    http:
+      paths:
+      - path: /services
+        backend:
+          serviceName: dashboard-api
+          servicePort: 8000
+      - path: /
+        backend:
+          serviceName: dashboard-frontend
+          servicePort: 80
